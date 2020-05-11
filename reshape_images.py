@@ -1,19 +1,17 @@
 import os
 import cv2  
-import time 
 
-
-ASSETS = 'assets'
+DOWNLOADED = 'assets/downloaded_images'
 RESHAPED = 'assets/reshaped'
 
 if not os.path.exists(RESHAPED):
 	os.mkdir(RESHAPED)
 
-for file in os.listdir(ASSETS):
+for file in os.listdir(DOWNLOADED):
 
 	_,ext = os.path.splitext(file)
 	if ext == '.png': # make sure it is an image
-		image_path = os.path.join(ASSETS,file)
+		image_path = os.path.join(DOWNLOADED,file)
 		image = cv2.imread(image_path) 
 
 		scale_percent = 70
@@ -23,7 +21,7 @@ for file in os.listdir(ASSETS):
 
 		# resize image
 		image = cv2.resize(image, dim, interpolation = cv2.INTER_AREA) 
-		image = cv2.copyMakeBorder(image, 100, 100, 105, 100, cv2.BORDER_CONSTANT) 
+		image = cv2.copyMakeBorder(image, 100, 100, 125, 100, cv2.BORDER_CONSTANT) 
 		cv2.imwrite(os.path.join(RESHAPED,file),image)
 		print(file,'done')
 	else:

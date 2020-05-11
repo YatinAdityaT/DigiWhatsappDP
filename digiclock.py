@@ -30,7 +30,7 @@ def hover_and_click_on_upload():
 
 	# refresh the page
 	driver.refresh()
-	time.sleep(4)
+	time.sleep(10)
 
 	# try clicking on dp
 	try:
@@ -76,21 +76,26 @@ def main():
 
 	hover_and_click_on_upload()
 
-	prev_second = None
+	prev_minute = None
 
 	while True:
 
-		now = datetime.datetime.now()
-		hour = now.hour
+		now    = datetime.datetime.now()
+		hour   = now.hour
 		minute = now.minute
-		second = now.second
 
-		# _ is used to avoid the code from running many times when second meets the criteria
-		if second%20 == 0 and prev_second != second:
-			prev_second = second
+		if hour < 12 :
+			meridiem = 'am'
+		else:
+			meridiem = 'pm'
+			hour = hour - 12
+
+		# _ is used to avoid the code from running many times when minute meets the criteria
+		if prev_minute != minute:
+			prev_minute = minute
 
 			#get the required image path from hour,min and second
-			image_path = '{}_{}_{}.png'.format(hour,minute,second)
+			image_path = '{}_{}_{}.png'.format(hour,minute,meridiem)
 			print('uploading :',image_path)
 
 			#pyautogui automatically writes the path into the file explorer and presses enter
@@ -103,7 +108,7 @@ def main():
 			__ = click_on_element(X_PATH_TICKMARK)
 
 			# Your image is now uploaded! repeat! :-)
-			time.sleep(5)
+			time.sleep(10)
 			hover_and_click_on_upload()
 
 
