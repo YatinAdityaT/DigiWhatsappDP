@@ -101,7 +101,11 @@ def main():
 			#pyautogui automatically writes the path into the file explorer and presses enter
 			PATH = os.path.join(os.getcwd(),os.path.relpath('assets/reshaped/'+image_path))
 			pyautogui.write(PATH) 
+			time.sleep(0.5)
 			pyautogui.press('return')
+			pyautogui.press('return')
+
+
 
 			#once the image is selected, give it a second to show up and then click the tick mark
 			time.sleep(1)
@@ -119,6 +123,6 @@ if __name__ == "__main__":
 	driver = webdriver.Firefox(executable_path=r'D:\Installers\geckodriver.exe')
 	driver.get('http://web.whatsapp.com')
 	print("Scan the barcode.. you have 5 seconds")
-	time.sleep(5) 
+	time.sleep(10) 
 
 	main()
