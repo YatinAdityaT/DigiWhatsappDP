@@ -1,0 +1,1 @@
+This is a fun little project which changes my whatsapp dp every hour to an image that matches that hour.
