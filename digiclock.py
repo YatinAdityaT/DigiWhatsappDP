@@ -1,13 +1,15 @@
+import os
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import StaleElementReferenceException
 
 driver = webdriver.Firefox(executable_path=r'D:\Installers\geckodriver.exe')
-driver.get('https://www.oliverboorman.biz/projects/tools/digital_clock.php')
+driver.get('http://web.whatsapp.com')
+response = input("Please confirm that you have scanned the barcode(type yes)")
 
-#//*[@id="ui-id-3"]
+
 
 def click_on_element(x_path):
     element = driver.find_element_by_xpath(x_path)
@@ -15,37 +17,22 @@ def click_on_element(x_path):
     return element
 
 
-CSS_SELECTOR_OF_BGCOLOR = f'#tab-1 > label:nth-child(2) > input:nth-child(2)'
-X_PATH_BGCOLOR = f'/html/body/main/section/fieldset[1]/label[2]/input'
-# bgcolor = driver.find_element_by_css_selector(CSS_SELECTOR_OF_BGCOLOR)
-bgcolor = click_on_element(X_PATH_BGCOLOR)
-CLASS_NAME_FOR_COLOR_SELECTION = 'basicColourSelector'
-bgcolor.select_by_visible_text('black')
-
-X_PATH_TIME = f'//*[@id="ui-id-3"]'
-time_ele = click_on_element(X_PATH_TIME)
-
-X_PATH_HOURS = '/html/body/main/section/fieldset[3]/div[1]/label[1]/input'
-hours_ele = click_on_element(X_PATH_HOURS)
-hours_ele.clear()
-hours_ele.send_keys('00')
-
-X_PATH_MINUTES = '/html/body/main/section/fieldset[3]/div[1]/label[2]/input'
-minutes_ele = click_on_element(X_PATH_MINUTES)
-minutes_ele.clear()
-minutes_ele.send_keys('00')
-
-X_PATH_SECONDS = '/html/body/main/section/fieldset[3]/div[1]/label[3]/input'
-seconds_ele = click_on_element(X_PATH_SECONDS)
-seconds_ele.clear()
-seconds_ele.send_keys('00')
-
-# AM_PM = '/html/body/main/section/fieldset[3]/div[2]/label[2]/select'
-am_pm_ele = Select(driver.find_element_by_css_selector("div.column:nth-child(2) > label:nth-child(2) > select:nth-child(2)"))
-am_pm_ele.select_by_index(0)
-
-X_PATH_IMAGE = '//*[@id="canvas"]'
+X_PATH_DP = f'/html/body/div[1]/div/div/div[3]/div/header/div[1]/div/img'
+X_PATH_DP_EXPANDED = f'/html/body/div[1]/div/div/div[2]/div[1]/span/div/div/div/div[1]/div/div/div/div/div/img'
+CSS_SELECTOR_DP_EXPANDED = '._2UkYn > span:nth-child(2)'
+X_PATH_UPLOAD_PHOTO = f'/html/body/div[1]/div/span[4]/div/ul/li[3]/div'
+CLASS_CHANGE_PICTURE = f'find_element_by_class_name'
 
 
-with open('test.png', 'wb') as file:
-    file.write(driver.find_element_by_xpath(X_PATH_IMAGE).screenshot_as_png)
+
+if response == "yes":
+	_ = click_on_element(X_PATH_DP)
+	time.sleep(1)
+	# dpx = driver.find_element_by_css_selector(CSS_SELECTOR_DP_EXPANDED)
+	# dpx.click()
+
+	#hover over the extended dp
+	dp_hover_over = driver.find_element_by_class_name('_3FXB1')
+	ActionChains(driver).move_to_element(dp_hover_over).perform() #.click(elementToClick).build()
+	driver.find_element_by_class_name('WX_XW').click()
+	driver.find_element_by_xpath('/html/body/div[1]/div/span[4]/div/ul/li[3]/div').send_keys(os.getcwd()+"/assets/0_0_0.png")
